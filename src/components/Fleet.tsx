@@ -72,7 +72,7 @@ export default function Fleet() {
 						<p className="mb-1 text-body-sm font-semibold tracking-wide text-secondary uppercase">
 							Disponibilidad Inmediata
 						</p>
-						<h2 className="text-headline-xl text-balance font-bold tracking-tight text-on-surface">
+						<h2 className="text-headline-xl-mobile text-balance font-bold tracking-tight text-on-surface md:text-headline-xl">
 							Flota de Renta en La Ceiba
 						</h2>
 						<p className="mt-2 text-body-md text-on-surface-variant">

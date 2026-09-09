@@ -31,7 +31,7 @@ export default function Promo() {
 									<FireIcon size={16} />
 									<span>Promoción Especial Activa</span>
 								</div>
-								<h2 className="mb-3 text-headline-xl text-balance font-extrabold leading-tight tracking-tight">
+								<h2 className="mb-3 text-headline-xl-mobile text-balance font-extrabold leading-tight tracking-tight md:text-headline-xl">
 									¡Renta 3 Días y el 4º Día es completamente gratis!
 								</h2>
 								<p className="text-body-md leading-relaxed text-on-secondary/90">

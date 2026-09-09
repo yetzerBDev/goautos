@@ -62,7 +62,7 @@ export default function ImportProcess() {
 						<p className="mb-1 text-body-sm font-semibold tracking-wide text-secondary uppercase">
 							Importación desde EE. UU.
 						</p>
-						<h2 className="mb-2 text-headline-xl text-balance font-extrabold tracking-tight text-on-surface">
+						<h2 className="mb-2 text-headline-xl-mobile text-balance font-extrabold tracking-tight text-on-surface md:text-headline-xl">
 							Cómo Funciona
 						</h2>
 						<p className="text-body-md text-on-surface-variant">

@@ -68,7 +68,7 @@ export default function Testimonials() {
 						</motion.p>
 						<motion.h2
 							variants={item}
-							className="mb-2 text-headline-xl text-balance font-extrabold tracking-tight text-on-surface"
+							className="mb-2 text-headline-xl-mobile text-balance font-extrabold tracking-tight text-on-surface md:text-headline-xl"
 						>
 							Lo que dicen nuestros clientes
 						</motion.h2>

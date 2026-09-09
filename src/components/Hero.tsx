@@ -114,14 +114,14 @@ export default function Hero() {
 						<motion.div variants={item} className="mb-9 w-full max-w-4xl">
 							<div
 								ref={barRef}
-								className="flex flex-wrap items-center gap-1 rounded-full border border-surface-container bg-surface-container-lowest p-1.5 shadow-lg md:flex-nowrap"
+								className="flex flex-col items-stretch gap-1 rounded-[1.75rem] border border-surface-container bg-surface-container-lowest p-1.5 shadow-lg md:flex-row md:items-center md:rounded-full"
 							>
 								{FIELDS.map((field, i) => {
 									const isOpen = openKey === field.key;
 									const value = values[field.key] ?? '';
 									return (
 										<Fragment key={field.key}>
-											<div className="relative min-w-[140px] flex-1">
+											<div className="relative flex-1 md:min-w-[140px]">
 												<button
 													type="button"
 													aria-haspopup="listbox"
