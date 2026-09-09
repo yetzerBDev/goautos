@@ -1,0 +1,39 @@
+---
+import Navbar from '../components/Navbar.tsx';
+import Hero from '../components/Hero.tsx';
+import Fleet from '../components/Fleet.tsx';
+import Promo from '../components/Promo.tsx';
+import Requirements from '../components/Requirements.tsx';
+import ImportProcess from '../components/ImportProcess.tsx';
+import ImportIntro from '../components/ImportIntro.tsx';
+import Testimonials from '../components/Testimonials.tsx';
+import Location from '../components/Location.tsx';
+import Footer from '../components/Footer.tsx';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>GoAutos | Renta de Autos e Importación en La Ceiba</title>
+		<meta name="description" content="Renta ejecutiva en La Ceiba e importación directa desde subastas en EE. UU. Sin complicaciones ni depósitos abusivos." />
+	</head>
+	<body>
+		<Navbar client:load />
+		<main className="pt-20">
+			<Hero client:load />
+			<Fleet client:visible />
+			<Promo client:visible />
+			<Requirements client:visible />
+			<ImportIntro client:visible />
+			<ImportProcess client:visible />
+			<Testimonials client:visible />
+			<Location client:visible />
+		</main>
+		<Footer />
+	</body>
+</html>
