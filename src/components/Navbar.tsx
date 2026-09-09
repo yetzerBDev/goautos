@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { ArrowRight01Icon, Cancel01Icon, Menu01Icon } from 'hugeicons-react';
-
-const NAV_LINKS = [
-	{ label: 'Renta', href: '#flota' },
-	{ label: 'Importación', href: '#importacion' },
-	{ label: 'Ubicación', href: '#contacto' },
-];
+import type { Lang } from '../i18n';
+import { dict, setLang, useLang } from '../i18n';
 
 const WHATSAPP_URL = 'https://wa.me/50489611945';
 
 export default function Navbar() {
+	const lang = useLang();
+	const t = dict[lang];
 	const [open, setOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
+
+	const NAV_LINKS = [
+		{ label: t.nav.renta, href: '#flota' },
+		{ label: t.nav.importacion, href: '#importacion' },
+		{ label: t.nav.ubicacion, href: '#contacto' },
+	];
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 8);
@@ -39,7 +43,7 @@ export default function Navbar() {
 						: 'border-b border-transparent bg-transparent'
 				}`}
 			>
-				<div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6">
+				<div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-6">
 					<a
 						href="#top"
 						aria-label="GoAutos, ir al inicio"
@@ -54,15 +58,12 @@ export default function Navbar() {
 						/>
 					</a>
 
-					<nav
-						aria-label="Principal"
-						className="hidden items-center gap-7 md:flex"
-					>
+					<nav aria-label="Principal" className="hidden items-center gap-7 md:flex">
 						{NAV_LINKS.map((link) => (
 							<a
 								key={link.href}
 								href={link.href}
-								className="group relative text-[13px] font-medium text-on-surface-variant transition-colors duration-200 hover:text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-sm"
+								className="group relative rounded-sm text-[13px] font-medium text-on-surface-variant transition-colors duration-200 hover:text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
 							>
 								{link.label}
 								<span
@@ -73,16 +74,20 @@ export default function Navbar() {
 						))}
 					</nav>
 
-					<div className="flex items-center gap-3">
-						<a
-							href={WHATSAPP_URL}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="hidden items-center gap-2 rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-on-primary shadow-sm transition-colors duration-200 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest sm:inline-flex"
+					<div className="flex shrink-0 items-center gap-3">
+						<button
+							type="button"
+							onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+							aria-label={t.nav.langLabel}
+							title={t.nav.langLabel}
+							className="flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-surface-container bg-surface-container-lowest px-3.5 text-[12px] font-bold text-on-surface transition-colors duration-200 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
 						>
-							WhatsApp
-							<ArrowRight01Icon size={16} />
-						</a>
+							<span className={lang === 'es' ? 'text-secondary' : 'text-outline'}>ES</span>
+							<span aria-hidden="true" className="text-outline-variant">
+								|
+							</span>
+							<span className={lang === 'en' ? 'text-secondary' : 'text-outline'}>EN</span>
+						</button>
 
 						<motion.button
 							type="button"
@@ -145,23 +150,15 @@ export default function Navbar() {
 										</motion.li>
 									))}
 								</ul>
-								<motion.a
+								<a
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									initial={{ opacity: 0, y: 6 }}
-									animate={{ opacity: 1, y: 0 }}
-									exit={{ opacity: 0 }}
-									transition={{
-										delay: 0.05 * NAV_LINKS.length,
-										duration: 0.2,
-										ease: [0.23, 1, 0.32, 1],
-									}}
 									className="mt-3 flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-on-primary transition-colors duration-200 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:hidden"
 								>
-									WhatsApp
+									{t.nav.cta}
 									<ArrowRight01Icon size={16} />
-								</motion.a>
+								</a>
 							</nav>
 						</motion.div>
 					)}

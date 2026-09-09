@@ -1,35 +1,10 @@
 import { MotionConfig, motion } from 'motion/react';
 import { ArrowRight01Icon, AuctionIcon, File01Icon, Key01Icon, Location01Icon } from 'hugeicons-react';
+import { dict, useLang } from '../i18n';
 
-const WHATSAPP_URL =
-	'https://wa.me/50489611945?text=Hola%20GoAutos%2C%20tengo%20un%20lote%20de%20subasta%20para%20cotizar';
+const WHATSAPP_URL = 'https://wa.me/50489611945';
 
-const STEPS = [
-	{
-		number: '1',
-		title: 'Elige tu Auto',
-		text: 'Selecciona tu vehículo en Copart, IAAI o Manheim según tus preferencias.',
-		icon: Location01Icon,
-	},
-	{
-		number: '2',
-		title: 'Inspección & Puja',
-		text: 'Revisamos historial Carfax y compramos al mejor precio acordado.',
-		icon: AuctionIcon,
-	},
-	{
-		number: '3',
-		title: 'Flete y SAR',
-		text: 'Transporte marítimo seguro y desaduanaje legal con factura CAI.',
-		icon: File01Icon,
-	},
-	{
-		number: '4',
-		title: 'Recibe tus Llaves',
-		text: 'Revisión mecánica integral y entrega listo para rodar con placas.',
-		icon: Key01Icon,
-	},
-];
+const ICONS = [Location01Icon, AuctionIcon, File01Icon, Key01Icon];
 
 const container = {
 	hidden: {},
@@ -48,6 +23,10 @@ const item = {
 };
 
 export default function ImportProcess() {
+	const lang = useLang();
+	const t = dict[lang];
+	const ip = t.importProcess;
+
 	return (
 		<MotionConfig reducedMotion="user">
 			<section id="importacion" className="w-full border-y border-surface-container bg-background py-16 md:py-20">
@@ -60,14 +39,12 @@ export default function ImportProcess() {
 						className="mx-auto mb-12 max-w-2xl text-center"
 					>
 						<p className="mb-1 text-body-sm font-semibold tracking-wide text-secondary uppercase">
-							Importación desde EE. UU.
+							{ip.eyebrow}
 						</p>
 						<h2 className="mb-2 text-headline-xl-mobile text-balance font-extrabold tracking-tight text-on-surface md:text-headline-xl">
-							Cómo Funciona
+							{ip.title}
 						</h2>
-						<p className="text-body-md text-on-surface-variant">
-							Importar tu vehículo desde EE. UU. con GoAutos es rápido y seguro.
-						</p>
+						<p className="text-body-md text-on-surface-variant">{ip.subtitle}</p>
 					</motion.div>
 
 					<div className="relative mx-auto max-w-5xl">
@@ -87,22 +64,23 @@ export default function ImportProcess() {
 							viewport={{ once: true, margin: '-60px' }}
 							className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-4"
 						>
-							{STEPS.map((step) => (
-								<motion.div key={step.number} variants={item} className="flex flex-col items-center text-center">
-									<div className="relative mb-4">
-										<div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface-container-low text-secondary shadow-sm">
-											<step.icon size={32} />
+							{ip.steps.map((step, i) => {
+								const Icon = ICONS[i];
+								return (
+									<motion.div key={step.title} variants={item} className="flex flex-col items-center text-center">
+										<div className="relative mb-4">
+											<div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface-container-low text-secondary shadow-sm">
+												<Icon size={32} />
+											</div>
+											<span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-[11px] font-bold text-on-secondary shadow-sm">
+												{i + 1}
+											</span>
 										</div>
-										<span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-[11px] font-bold text-on-secondary shadow-sm">
-											{step.number}
-										</span>
-									</div>
-									<h3 className="mb-1 text-[16px] font-bold text-on-surface">{step.title}</h3>
-									<p className="max-w-[210px] text-body-sm leading-relaxed text-on-surface-variant">
-										{step.text}
-									</p>
-								</motion.div>
-							))}
+										<h3 className="mb-1 text-[16px] font-bold text-on-surface">{step.title}</h3>
+										<p className="max-w-[210px] text-body-sm leading-relaxed text-on-surface-variant">{step.text}</p>
+									</motion.div>
+								);
+							})}
 						</motion.div>
 					</div>
 
@@ -114,12 +92,12 @@ export default function ImportProcess() {
 						className="mt-12 text-center"
 					>
 						<a
-							href={WHATSAPP_URL}
+							href={`${WHATSAPP_URL}?text=${encodeURIComponent(t.wa.importProcess)}`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-body-sm font-semibold text-on-secondary shadow-sm transition-[transform,background-color] duration-200 ease-out hover:bg-secondary-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:scale-[0.97]"
 						>
-							Cotizar Vehículo de Subasta
+							{ip.cta}
 							<ArrowRight01Icon size={18} />
 						</a>
 					</motion.div>

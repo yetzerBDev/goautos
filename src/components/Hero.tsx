@@ -6,37 +6,9 @@ import {
 	Location01Icon,
 	Search01Icon,
 } from 'hugeicons-react';
+import { dict, useLang } from '../i18n';
 
 const WHATSAPP_URL = 'https://wa.me/50489611945';
-
-const FIELDS = [
-	{
-		key: 'servicio',
-		label: 'Servicio',
-		placeholder: 'Renta o Venta',
-		options: ['Renta de Auto', 'Venta de Auto', 'Importación de Subasta'],
-	},
-	{
-		key: 'marca',
-		label: 'Marca',
-		placeholder: 'Cualquier Marca',
-		options: ['Todas las Marcas', 'Toyota', 'Honda', 'Kia', 'Suzuki', 'Mercedes-Benz', 'BMW', 'Fiat'],
-	},
-	{
-		key: 'modelo',
-		label: 'Modelo',
-		placeholder: 'Cualquier Modelo',
-		options: ['Cualquier Modelo', 'Compacto', 'Sedán', 'SUV', 'Camioneta', 'Deportivo'],
-	},
-	{
-		key: 'presupuesto',
-		label: 'Presupuesto',
-		placeholder: 'Todos los Precios',
-		options: ['Todos los Precios', 'Hasta $50 / día', '$50 - $70 / día', '$70 - $100 / día', 'Más de $100 / día'],
-	},
-];
-
-const TRUST_ITEMS = ['Sin tarjeta obligatoria', 'Facturación Fiscal CAI', 'Entrega Aeropuerto y Ferry'];
 
 const container = {
 	show: {
@@ -54,13 +26,18 @@ const item = {
 };
 
 export default function Hero() {
+	const lang = useLang();
+	const t = dict[lang];
+	const FIELDS = t.hero.fields;
+	const TRUST_ITEMS = t.hero.trust;
+
 	const [openKey, setOpenKey] = useState<string | null>(null);
 	const [values, setValues] = useState<Record<string, string>>({});
 	const barRef = useRef<HTMLDivElement>(null);
 
 	const selectedCount = Object.keys(values).length;
 	const message = [
-		'Hola GoAutos, busco:',
+		t.hero.messageIntro,
 		values.servicio?.toLowerCase() ?? FIELDS[0].placeholder.toLowerCase(),
 		values.marca ?? FIELDS[1].placeholder,
 		values.modelo ?? FIELDS[2].placeholder,
@@ -93,22 +70,21 @@ export default function Hero() {
 							className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-surface-container-low px-4 py-1 text-caption font-semibold tracking-wider text-secondary uppercase"
 						>
 							<Location01Icon size={16} />
-							<span>La Ceiba, Honduras · Plaza Sicilian</span>
+							<span>{t.hero.badge}</span>
 						</motion.div>
 
 						<motion.h1
 							variants={item}
 							className="mx-auto max-w-4xl text-display-hero-mobile sm:text-display-hero text-balance font-extrabold tracking-tight leading-[1.08] text-on-surface"
 						>
-							Encuentra Tu Auto Ideal
+							{t.hero.title}
 						</motion.h1>
 
 						<motion.p
 							variants={item}
 							className="mx-auto mt-4 mb-9 max-w-2xl text-body-lg leading-relaxed text-on-surface-variant"
 						>
-							Renta ejecutiva en La Ceiba e importación directa desde subastas en EE. UU.
-							Sin complicaciones ni depósitos abusivos.
+							{t.hero.subtitle}
 						</motion.p>
 
 						<motion.div variants={item} className="mb-9 w-full max-w-4xl">
@@ -162,7 +138,12 @@ export default function Hero() {
 															<ul className="scrollbar-hidden max-h-64 overflow-auto overscroll-contain py-1.5">
 																{field.options.map((option) => {
 																	const selected = value === option;
-																	return (
+useEffect(() => {
+		setValues({});
+		setOpenKey(null);
+	}, [lang]);
+
+	return (
 																		<li key={option}>
 																			<button
 																				type="button"
@@ -199,7 +180,7 @@ export default function Hero() {
 									href={searchHref}
 									target="_blank"
 									rel="noopener noreferrer"
-									aria-label={selectedCount > 0 ? 'Buscar en WhatsApp con mis selecciones' : 'Buscar en WhatsApp'}
+									aria-label={selectedCount > 0 ? t.hero.searchAriaFilled : t.hero.searchAria}
 									className="ml-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary text-on-secondary shadow-md transition-colors duration-200 hover:bg-secondary-container active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
 								>
 									<Search01Icon size={22} />
@@ -213,7 +194,7 @@ export default function Hero() {
 								animate={{ opacity: 1, scale: 1, y: 0 }}
 								transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
 								src="/hero_image.png"
-								alt="Auto destacado de la flota GoAutos"
+								alt={t.hero.imgAlt}
 								className="mx-auto h-auto max-h-[340px] w-full object-contain drop-shadow-[0_28px_44px_rgba(11,28,48,0.18)]"
 							/>
 						</motion.div>

@@ -1,23 +1,8 @@
 import { MotionConfig, motion } from 'motion/react';
 import { IdentityCardIcon, LicenseIcon, MoneySavingJarIcon } from 'hugeicons-react';
+import { dict, useLang } from '../i18n';
 
-const REQUIREMENTS = [
-	{
-		title: '1. Licencia de conducir vigente',
-		text: 'Aceptamos licencias nacionales hondureñas y licencias internacionales o extranjeras al día.',
-		icon: LicenseIcon,
-	},
-	{
-		title: '2. Identidad (DNI) o Pasaporte',
-		text: 'Documento de identidad o pasaporte original vigente para validación rápida en minutos.',
-		icon: IdentityCardIcon,
-	},
-	{
-		title: '3. Depósito en garantía',
-		text: 'Depósito accesible y 100% reembolsable al entregar la unidad, en efectivo o transferencia.',
-		icon: MoneySavingJarIcon,
-	},
-];
+const ICONS = [LicenseIcon, IdentityCardIcon, MoneySavingJarIcon];
 
 const container = {
 	hidden: {},
@@ -36,6 +21,10 @@ const item = {
 };
 
 export default function Requirements() {
+	const lang = useLang();
+	const t = dict[lang];
+	const req = t.requirements;
+
 	return (
 		<MotionConfig reducedMotion="user">
 			<section className="w-full bg-background pt-8 pb-16 md:pb-20">
@@ -49,10 +38,10 @@ export default function Requirements() {
 					>
 						<div className="mx-auto mb-8 max-w-2xl text-center">
 							<p className="mb-1 text-body-sm font-semibold tracking-wide text-secondary uppercase">
-								Renta Fácil y Sin Burocracia
+								{req.eyebrow}
 							</p>
 							<h3 className="text-headline-lg text-balance font-bold tracking-tight text-on-surface">
-								Requisitos de Renta Simples
+								{req.title}
 							</h3>
 						</div>
 
@@ -63,21 +52,24 @@ export default function Requirements() {
 							viewport={{ once: true, margin: '-60px' }}
 							className="grid grid-cols-1 gap-4 md:grid-cols-3"
 						>
-							{REQUIREMENTS.map((req) => (
-								<motion.div
-									key={req.title}
-									variants={item}
-									className="flex items-start gap-4 rounded-2xl bg-surface-container-low/60 p-4"
-								>
-									<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
-										<req.icon size={22} />
-									</div>
-									<div>
-										<h4 className="mb-1 text-[16px] font-bold text-on-surface">{req.title}</h4>
-										<p className="text-body-sm leading-relaxed text-on-surface-variant">{req.text}</p>
-									</div>
-								</motion.div>
-							))}
+							{req.items.map((rq, i) => {
+								const Icon = ICONS[i];
+								return (
+									<motion.div
+										key={rq.title}
+										variants={item}
+										className="flex items-start gap-4 rounded-2xl bg-surface-container-low/60 p-4"
+									>
+										<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
+											<Icon size={22} />
+										</div>
+										<div>
+											<h4 className="mb-1 text-[16px] font-bold text-on-surface">{rq.title}</h4>
+											<p className="text-body-sm leading-relaxed text-on-surface-variant">{rq.text}</p>
+										</div>
+									</motion.div>
+								);
+							})}
 						</motion.div>
 					</motion.div>
 				</div>

@@ -1,27 +1,7 @@
 import { useRef } from 'react';
 import { MotionConfig, motion } from 'motion/react';
 import { ArrowLeft01Icon, ArrowRight01Icon, StarIcon } from 'hugeicons-react';
-
-const TESTIMONIALS = [
-	{
-		text: 'El proceso de reserva fue rápido y transparente. El vehículo estaba impecable y con entrega puntual en el aeropuerto para tomar el ferry.',
-		name: 'Sarah J.',
-		city: 'San Pedro Sula, HN',
-		initials: 'SJ',
-	},
-	{
-		text: 'Excelentes precios, trato amable y sin letras pequeñas ni cobros ocultos. Mi opción definitiva para alquilar cada vez que viajo a La Ceiba.',
-		name: 'James T.',
-		city: 'La Ceiba, HN',
-		initials: 'JT',
-	},
-	{
-		text: 'Importamos una camioneta familiar con total asesoría en flete y desaduanaje. Cero complicaciones, fotos en cada etapa y entrega con placas.',
-		name: 'Priya K.',
-		city: 'Tegucigalpa, HN',
-		initials: 'PK',
-	},
-];
+import { dict, useLang } from '../i18n';
 
 const container = {
 	hidden: {},
@@ -40,6 +20,9 @@ const item = {
 };
 
 export default function Testimonials() {
+	const lang = useLang();
+	const t = dict[lang];
+	const ts = t.testimonials;
 	const trackRef = useRef<HTMLDivElement>(null);
 
 	const scroll = (dir: 'prev' | 'next') => {
@@ -64,23 +47,23 @@ export default function Testimonials() {
 							variants={item}
 							className="mb-2 text-body-sm font-semibold tracking-widest text-secondary uppercase"
 						>
-							Testimonios
+							{ts.eyebrow}
 						</motion.p>
 						<motion.h2
 							variants={item}
 							className="mb-2 text-headline-xl-mobile text-balance font-extrabold tracking-tight text-on-surface md:text-headline-xl"
 						>
-							Lo que dicen nuestros clientes
+							{ts.title}
 						</motion.h2>
 						<motion.p variants={item} className="text-body-md text-on-surface-variant">
-							Personas reales. Experiencias reales.
+							{ts.subtitle}
 						</motion.p>
 
 						<motion.div variants={item} className="mt-7 flex items-center gap-3">
 							<button
 								type="button"
 								onClick={() => scroll('prev')}
-								aria-label="Testimonios anteriores"
+								aria-label={ts.prevLabel}
 								className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface transition-colors duration-150 ease-out hover:bg-surface-container hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:scale-[0.97]"
 							>
 								<ArrowLeft01Icon size={18} />
@@ -88,7 +71,7 @@ export default function Testimonials() {
 							<button
 								type="button"
 								onClick={() => scroll('next')}
-								aria-label="Testimonios siguientes"
+								aria-label={ts.nextLabel}
 								className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface transition-colors duration-150 ease-out hover:bg-surface-container hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:scale-[0.97]"
 							>
 								<ArrowRight01Icon size={18} />
@@ -104,9 +87,9 @@ export default function Testimonials() {
 						ref={trackRef}
 						className="-mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto scrollbar-hidden px-6 pb-2"
 					>
-						{TESTIMONIALS.map((t) => (
+						{ts.items.map((itemEntry) => (
 							<motion.figure
-								key={t.name}
+								key={itemEntry.name}
 								variants={item}
 								className="flex w-[min(360px,82vw)] shrink-0 snap-start flex-col rounded-2xl border border-surface-container bg-surface-container-lowest p-6 shadow-sm"
 							>
@@ -116,15 +99,15 @@ export default function Testimonials() {
 									))}
 								</div>
 								<blockquote className="mb-6 flex-1 text-body-md leading-relaxed text-on-surface-variant">
-									<p>“{t.text}”</p>
+									<p>“{itemEntry.text}”</p>
 								</blockquote>
 								<figcaption className="flex items-center gap-3">
 									<span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container text-body-sm font-bold text-secondary">
-										{t.initials}
+										{itemEntry.initials}
 									</span>
 									<span className="flex flex-col leading-tight">
-										<span className="text-body-sm font-semibold text-on-surface">{t.name}</span>
-										<span className="text-caption text-outline">{t.city}</span>
+										<span className="text-body-sm font-semibold text-on-surface">{itemEntry.name}</span>
+										<span className="text-caption text-outline">{itemEntry.city}</span>
 									</span>
 								</figcaption>
 							</motion.figure>

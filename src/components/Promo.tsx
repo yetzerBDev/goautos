@@ -1,10 +1,14 @@
 import { MotionConfig, motion } from 'motion/react';
 import { ArrowRight01Icon, FireIcon } from 'hugeicons-react';
+import { dict, useLang } from '../i18n';
 
-const WHATSAPP_URL =
-	'https://wa.me/50489611945?text=Hola%20GoAutos%2C%20quiero%20aprovechar%20la%20Promo%20de%20Renta%203%20d%C3%ADas%20y%20el%204to%20gratis';
+const WHATSAPP_URL = 'https://wa.me/50489611945';
 
 export default function Promo() {
+	const lang = useLang();
+	const t = dict[lang];
+	const promo = t.promo;
+
 	return (
 		<MotionConfig reducedMotion="user">
 			<section className="w-full bg-background py-12 md:py-16">
@@ -29,31 +33,25 @@ export default function Promo() {
 							<div className="max-w-2xl text-center lg:text-left">
 								<div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-surface-container-lowest/15 px-4 py-1.5 text-caption font-bold tracking-wider uppercase">
 									<FireIcon size={16} />
-									<span>Promoción Especial Activa</span>
+									<span>{promo.badge}</span>
 								</div>
 								<h2 className="mb-3 text-headline-xl-mobile text-balance font-extrabold leading-tight tracking-tight md:text-headline-xl">
-									¡Renta 3 Días y el 4º Día es completamente gratis!
+									{promo.title}
 								</h2>
-								<p className="text-body-md leading-relaxed text-on-secondary/90">
-									Disfruta tus vacaciones en La Ceiba e Islas de la Bahía con la mejor tarifa. Alquila
-									cualquier vehículo de nuestra flota por 3 días y te regalamos el cuarto día adicional
-									sin costo alguno.
-								</p>
+								<p className="text-body-md leading-relaxed text-on-secondary/90">{promo.body}</p>
 							</div>
 
 							<div className="flex shrink-0 flex-col items-center gap-3 sm:items-end">
 								<a
-									href={WHATSAPP_URL}
+									href={`${WHATSAPP_URL}?text=${encodeURIComponent(t.wa.promo)}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="inline-flex items-center gap-2 rounded-full bg-surface-container-lowest px-6 py-3 text-body-sm font-bold text-secondary shadow-sm transition-[transform,background-color] duration-200 ease-out hover:bg-surface-container-low focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-secondary active:scale-[0.97]"
 								>
-									Aprovechar Promo por WhatsApp
+									{promo.cta}
 									<ArrowRight01Icon size={18} />
 								</a>
-								<span className="text-center text-caption text-on-secondary/80 sm:text-right">
-									Válido para reservas con entrega en La Ceiba y terminales
-								</span>
+								<span className="text-center text-caption text-on-secondary/80 sm:text-right">{promo.note}</span>
 							</div>
 						</div>
 					</motion.div>

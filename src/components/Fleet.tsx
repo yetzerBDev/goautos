@@ -1,52 +1,9 @@
 import { Fragment } from 'react';
 import { MotionConfig, motion } from 'motion/react';
 import { CallIcon } from 'hugeicons-react';
+import { dict, useLang } from '../i18n';
 
 const WHATSAPP_URL = 'https://wa.me/50489611945';
-
-const FLEET = [
-	{
-		category: 'Sedanes',
-		price: '$44.99',
-		model: 'Toyota Corolla o similar',
-		image: '/corolla.webp',
-		alt: 'Sedán, Toyota Corolla',
-		waText: 'Hola GoAutos, quiero reservar categoría Sedanes',
-		featured: true,
-	},
-	{
-		category: 'Económicos',
-		price: '$34.99',
-		model: 'Hyundai i10 o similar',
-		image: '/i10.webp',
-		alt: 'Auto económico, Hyundai i10',
-		waText: 'Hola GoAutos, quiero reservar categoría Económicos',
-	},
-	{
-		category: 'Ejecutivas',
-		price: '$64.99',
-		model: 'Honda CR-V o similar',
-		image: '/crv.png',
-		alt: 'Auto ejecutivo, Honda CR-V',
-		waText: 'Hola GoAutos, quiero reservar categoría Ejecutivas',
-	},
-	{
-		category: 'Todo Terreno (4x4)',
-		price: '$110.00',
-		model: 'Toyota Prado o similar',
-		image: '/prado.webp',
-		alt: 'Todo terreno 4x4, Toyota Prado',
-		waText: 'Hola GoAutos, quiero reservar categoría Todo Terreno (4x4)',
-	},
-	{
-		category: 'Pick-ups',
-		price: '$74.99',
-		model: 'Toyota Hilux o similar',
-		image: '/hilux.png',
-		alt: 'Pick-up, Toyota Hilux',
-		waText: 'Hola GoAutos, quiero reservar categoría Pick-ups',
-	},
-];
 
 const container = {
 	show: {
@@ -64,20 +21,61 @@ const card = {
 };
 
 export default function Fleet() {
+	const lang = useLang();
+	const t = dict[lang];
+	const ft = t.fleet;
+
+	const FLEET = [
+		{
+			category: ft.catSedanes,
+			price: '$44.99',
+			model: ft.modelCorolla,
+			image: '/corolla.webp',
+			alt: 'Sedán, Toyota Corolla',
+			featured: true,
+		},
+		{
+			category: ft.catEconomicos,
+			price: '$34.99',
+			model: ft.modelI10,
+			image: '/i10.webp',
+			alt: 'Auto económico, Hyundai i10',
+		},
+		{
+			category: ft.catEjecutivas,
+			price: '$64.99',
+			model: ft.modelCrv,
+			image: '/crv.png',
+			alt: 'Auto ejecutivo, Honda CR-V',
+		},
+		{
+			category: ft.catTodoTerreno,
+			price: '$110.00',
+			model: ft.modelPrado,
+			image: '/prado.webp',
+			alt: 'Todo terreno 4x4, Toyota Prado',
+		},
+		{
+			category: ft.catPickups,
+			price: '$74.99',
+			model: ft.modelHilux,
+			image: '/hilux.png',
+			alt: 'Pick-up, Toyota Hilux',
+		},
+	];
+
 	return (
 		<MotionConfig reducedMotion="user">
 			<section id="flota" className="w-full bg-background py-16 md:py-20">
 				<div className="mx-auto max-w-7xl px-6">
 					<div className="mx-auto mb-10 max-w-2xl text-center">
 						<p className="mb-1 text-body-sm font-semibold tracking-wide text-secondary uppercase">
-							Disponibilidad Inmediata
+							{ft.eyebrow}
 						</p>
 						<h2 className="text-headline-xl-mobile text-balance font-bold tracking-tight text-on-surface md:text-headline-xl">
-							Flota de Renta en La Ceiba
+							{ft.title}
 						</h2>
-						<p className="mt-2 text-body-md text-on-surface-variant">
-							Unidades limpias, acondicionadas y con entrega directa en el aeropuerto o muelle.
-						</p>
+						<p className="mt-2 text-body-md text-on-surface-variant">{ft.subtitle}</p>
 					</div>
 
 					<motion.div
@@ -100,7 +98,7 @@ export default function Fleet() {
 									<Fragment>
 										<div className="flex grow flex-col items-center text-center lg:flex-none lg:items-start lg:text-left">
 											<span className="mb-3 inline-flex items-center rounded-full bg-secondary px-3 py-1 text-caption font-bold text-on-secondary">
-												Más solicitada
+												{ft.featuredBadge}
 											</span>
 											<h3 className="mb-2 text-caption font-bold tracking-wider text-primary uppercase">
 												{car.category.toUpperCase()}
@@ -108,17 +106,17 @@ export default function Fleet() {
 											<div className="mb-3 flex items-baseline gap-1 text-secondary">
 												<span className="text-headline-xl font-extrabold">{car.price}</span>
 												<span className="text-caption font-semibold leading-tight text-secondary">
-													<span className="block text-[10px] font-normal text-outline">Por Día</span>
+													<span className="block text-[10px] font-normal text-outline">{ft.perDay}</span>
 												</span>
 											</div>
 											<p className="mb-5 text-body-sm font-medium text-on-surface-variant">{car.model}</p>
 											<a
-												href={`${WHATSAPP_URL}?text=${encodeURIComponent(car.waText)}`}
+												href={`${WHATSAPP_URL}?text=${encodeURIComponent(t.wa.fleet(car.category))}`}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="inline-flex items-center justify-center rounded-full bg-secondary px-6 py-2.5 text-caption font-bold text-on-secondary shadow-sm transition-colors duration-200 hover:bg-secondary-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
 											>
-												Reservar Ahora
+												{ft.book}
 											</a>
 										</div>
 										<div className="my-4 flex grow items-center justify-center lg:my-0 lg:flex-none">
@@ -139,7 +137,7 @@ export default function Fleet() {
 											<div className="mb-3 flex items-baseline justify-center gap-1 text-secondary">
 												<span className="text-headline-lg font-extrabold">{car.price}</span>
 												<span className="text-caption font-semibold leading-tight text-secondary">
-													<span className="block text-[10px] font-normal text-outline">Por Día</span>
+													<span className="block text-[10px] font-normal text-outline">{ft.perDay}</span>
 												</span>
 											</div>
 										</div>
@@ -156,12 +154,12 @@ export default function Fleet() {
 										<div className="w-full">
 											<p className="mb-4 text-caption font-medium text-on-surface-variant">{car.model}</p>
 											<a
-												href={`${WHATSAPP_URL}?text=${encodeURIComponent(car.waText)}`}
+												href={`${WHATSAPP_URL}?text=${encodeURIComponent(t.wa.fleet(car.category))}`}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="inline-flex w-full max-w-[150px] items-center justify-center rounded-full border border-secondary px-4 py-2 text-caption font-bold text-secondary transition-colors duration-200 hover:bg-secondary hover:text-on-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
 											>
-												Reservar Ahora
+												{ft.book}
 											</a>
 										</div>
 									</Fragment>
@@ -175,11 +173,9 @@ export default function Fleet() {
 						>
 							<div className="text-center sm:text-left">
 								<h3 className="mb-1 text-headline-md font-bold tracking-tight text-on-surface">
-									¿Necesitas más información?
+									{ft.moreInfo}
 								</h3>
-								<p className="text-body-sm text-on-surface-variant">
-									Escríbenos o llámanos 24/7 y te asistimos.
-								</p>
+								<p className="text-body-sm text-on-surface-variant">{ft.moreInfoText}</p>
 							</div>
 							<a
 								href={WHATSAPP_URL}

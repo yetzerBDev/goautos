@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { MotionConfig, motion } from 'motion/react';
 import { CallIcon, Location01Icon } from 'hugeicons-react';
 import 'leaflet/dist/leaflet.css';
+import { dict, useLang } from '../i18n';
 
 const COORDS = { lat: 15.781139, lng: -86.788972 };
 const MAPS_URL = 'https://maps.app.goo.gl/WrxMLEjtuG43kY8c9';
@@ -27,6 +28,9 @@ const item = {
 };
 
 export default function Location() {
+	const lang = useLang();
+	const t = dict[lang];
+	const loc = t.location;
 	const mapRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -78,23 +82,22 @@ export default function Location() {
 							variants={item}
 							className="mb-2 text-body-sm font-semibold tracking-widest text-secondary uppercase"
 						>
-							Sede Presencial
+							{loc.eyebrow}
 						</motion.p>
 
 						<motion.h2
 							variants={item}
 							className="mb-3 text-headline-xl-mobile text-balance font-extrabold tracking-tight text-on-surface md:text-headline-xl"
 						>
-							Plaza Sicilian en La Ceiba
+							{loc.title}
 						</motion.h2>
 
 						<motion.p variants={item} className="mb-2 text-body-lg text-on-surface">
-							Boulevard 15 de Septiembre, La Ceiba, Honduras.
+							{loc.address}
 						</motion.p>
 
 						<motion.p variants={item} className="mb-8 max-w-md text-body-md leading-relaxed text-on-surface-variant">
-							A solo 20 minutos del Aeropuerto Guillermo Anderson y 15 minutos del Muelle de Cabotaje para ferries
-							a Roatán y Útila.
+							{loc.note}
 						</motion.p>
 
 						<motion.div variants={item} className="flex flex-wrap items-center gap-3">
@@ -105,7 +108,7 @@ export default function Location() {
 								className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-body-sm font-semibold text-on-primary shadow-sm transition-[transform,background-color] duration-200 ease-out hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:scale-[0.97]"
 							>
 								<Location01Icon size={18} />
-								Ver en Google Maps
+								{loc.mapsCta}
 							</a>
 							<a
 								href={PHONE_URL}
@@ -124,7 +127,7 @@ export default function Location() {
 						transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
 						className="relative z-0 isolate overflow-hidden rounded-2xl border border-surface-container bg-surface-container-low shadow-sm lg:col-span-6"
 					>
-						<div ref={mapRef} className="h-72 w-full sm:h-80 lg:h-[26rem]" aria-label="Mapa de la ubicación de GoAutos" />
+						<div ref={mapRef} className="h-72 w-full sm:h-80 lg:h-[26rem]" aria-label={loc.mapAria} />
 					</motion.div>
 				</div>
 			</section>

@@ -1,10 +1,5 @@
 import { FavouriteIcon, CallIcon, ChatIcon, Facebook01Icon, InstagramIcon, Location01Icon, Mail01Icon } from 'hugeicons-react';
-
-const NAV_LINKS = [
-	{ label: 'Flota', href: '#flota' },
-	{ label: 'Importación', href: '#importacion' },
-	{ label: 'Contacto', href: '#contacto' },
-];
+import { dict, useLang } from '../i18n';
 
 const WHATSAPP_URL = 'https://wa.me/50489611945';
 
@@ -14,6 +9,16 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+	const lang = useLang();
+	const t = dict[lang];
+	const f = t.footer;
+
+	const NAV_LINKS = [
+		{ label: t.nav.renta, href: '#flota' },
+		{ label: t.nav.importacion, href: '#importacion' },
+		{ label: t.nav.ubicacion, href: '#contacto' },
+	];
+
 	return (
 		<footer className="w-full border-t border-surface-container bg-surface-container-lowest">
 			<div className="mx-auto max-w-7xl px-6 pt-14 pb-8">
@@ -22,15 +27,12 @@ export default function Footer() {
 						<a href="#" aria-label="GoAutos inicio" className="inline-flex items-center gap-2">
 							<img src="/logo.png" alt="GoAutos Honduras" className="h-8 w-auto object-contain" />
 						</a>
-						<p className="mt-4 max-w-sm text-body-md leading-relaxed text-on-surface-variant">
-							Renta ejecutiva e importación directa desde subastas en EE. UU. Sin complicaciones ni
-							depósitos abusivos en La Ceiba, Honduras.
-						</p>
+						<p className="mt-4 max-w-sm text-body-md leading-relaxed text-on-surface-variant">{f.tagline}</p>
 					</div>
 
 					<div className="md:col-span-3">
 						<h3 className="mb-4 text-label-sm font-semibold tracking-widest text-on-surface uppercase">
-							Enlaces
+							{f.links}
 						</h3>
 						<ul className="space-y-2.5">
 							{NAV_LINKS.map((link) => (
@@ -48,12 +50,12 @@ export default function Footer() {
 
 					<div className="md:col-span-3">
 						<h3 className="mb-4 text-label-sm font-semibold tracking-widest text-on-surface uppercase">
-							Contacto
+							{f.contact}
 						</h3>
 						<ul className="space-y-3">
 							<li className="flex items-start gap-2 text-body-md text-on-surface-variant">
 								<Location01Icon size={17} className="mt-0.5 shrink-0 text-secondary" />
-								<span>Plaza Sicilian, Boulevard 15 de Septiembre, La Ceiba, Honduras</span>
+								<span>{f.address}</span>
 							</li>
 							<li>
 								<a
@@ -63,7 +65,7 @@ export default function Footer() {
 									className="inline-flex items-center gap-2 text-body-md text-on-surface-variant transition-colors duration-150 ease-out hover:text-secondary"
 								>
 									<ChatIcon size={17} className="shrink-0 text-secondary" />
-									WhatsApp: +504 8961-1945
+									{f.whatsapp}
 								</a>
 							</li>
 							<li>
@@ -96,11 +98,9 @@ export default function Footer() {
 					</div>
 
 					<div className="flex w-full flex-col items-center justify-between gap-3 sm:flex-row">
-						<p className="text-caption text-on-surface-variant">
-							© 2026 GoAutos. Facturación autorizada SAR CAI.
-						</p>
+						<p className="text-caption text-on-surface-variant">{f.copyright}</p>
 						<p className="inline-flex items-center gap-1.5 text-caption text-on-surface-variant">
-							Desarrollado por
+							{f.developedBy}
 							<a
 								href="https://kibo.company"
 								target="_blank"
